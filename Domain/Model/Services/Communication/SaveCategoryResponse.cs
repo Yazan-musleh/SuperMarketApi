@@ -3,19 +3,26 @@ namespace Supermarket.API.Domain.Model.Services.Communication
     public class SaveCategoryResponse : BaseResponse
     {
         public Category Category { get; private set; }
-        public SaveCategoryResponse(bool success, string message, Category category) : base(success, message)
+
+        private SaveCategoryResponse(bool success, string message, Category category) : base(success, message)
         {
             Category = category;
         }
 
-        ///<summary>
-        ///Creates a Success response
-        ///</summary>
-        ///<param name="Category">Saved category </param>
-        ///<returns> response </returns>
+        /// <summary>
+        /// Creates a success response.
+        /// </summary>
+        /// <param name="category">Saved category.</param>
+        /// <returns>Response.</returns>
+        public SaveCategoryResponse(Category category) : this(true, string.Empty, category)
+        { }
 
+        /// <summary>
+        /// Creates am error response.
+        /// </summary>
+        /// <param name="message">Error message.</param>
+        /// <returns>Response.</returns>
         public SaveCategoryResponse(string message) : this(false, message, null)
-        {
-        }
+        { }
     }
 }

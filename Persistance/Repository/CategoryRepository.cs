@@ -13,9 +13,16 @@ namespace Supermarket.API.Persistance.Repository
         {
         }
 
+        public async Task AddAsync(Category category)
+        {
+            await _context.Categories.AddAsync(category);
+        }
+
         public async Task<IEnumerable<Category>> ListAsync()
         {
             return await _context.Categories.ToListAsync();
+
+            // how it is to write with an external keyboard
             
         }
     }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Supermarket.API.Domain.Model.Repositories;
 using Supermarket.API.Domain.Model.Services;
 using Supermarket.API.Domain.Services;
 using Supermarket.API.Mapping;
@@ -47,6 +48,7 @@ namespace Supermarket.API
             
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<Domain.Services.ICategoryService, CategoryService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(typeof(Startup));
 

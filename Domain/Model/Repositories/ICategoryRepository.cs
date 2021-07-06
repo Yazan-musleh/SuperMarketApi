@@ -6,5 +6,6 @@ namespace Supermarket.API.Domain.Model.Services
     public interface ICategoryRepository
     {
         Task<IEnumerable<Category>> ListAsync(); 
+        Task AddAsync(Category category);
     }
 }
