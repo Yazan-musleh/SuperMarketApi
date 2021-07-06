@@ -7,5 +7,7 @@ namespace Supermarket.API.Domain.Model.Services
     {
         Task<IEnumerable<Category>> ListAsync(); 
         Task AddAsync(Category category);
+        Task<Category> GetByIdAsync(int id);
+        void Update(Category category);
     }
 }

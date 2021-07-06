@@ -8,7 +8,7 @@ using Supermarket.API.Domain.Services;
 
 namespace Supermarket.API.Services
 {
-    public class CategoryService : Domain.Services.ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _repository;
 
@@ -39,6 +39,32 @@ namespace Supermarket.API.Services
             catch (System.Exception ex)
             {
                 return new SaveCategoryResponse($"An error occurred while saving the category {ex.Message}");
+            }
+        }
+
+        public async Task<SaveCategoryResponse> UpdateAsync(int id, Category category)
+        {
+            var existingCategory = await _repository.GetByIdAsync(id);
+
+            if (existingCategory is null)
+            {
+                return new SaveCategoryResponse("Category Not Found. 404");
+            }
+
+            existingCategory.Name = category.Name;
+            
+
+            try
+            {
+                _repository.Update(existingCategory);
+                await _unitOfWork.CompleteAsync();
+                
+                return new SaveCategoryResponse(existingCategory);
+            }
+            catch (System.Exception ex)
+            {
+                
+                return new SaveCategoryResponse($"An Error Occurred when updating the category: {ex.Message}");
             }
         }
     }
