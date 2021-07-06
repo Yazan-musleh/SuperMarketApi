@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Supermarket.API.Domain.Model;
 using Supermarket.API.Domain.Model.Services;
+using Supermarket.API.Domain.Services;
 using Supermarket.API.DTOs;
 using Supermarket.API.Extensions;
 
@@ -13,10 +14,10 @@ namespace Supermarket.API.Controllers
     [Route("/api/[controller]")]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryService;
+        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public CategoriesController(ICategoryRepository categoryService, IMapper mapper)
+        public CategoriesController(ICategoryService categoryService, IMapper mapper)
         {
             this._mapper = mapper;
             _categoryService = categoryService;
@@ -38,6 +39,18 @@ namespace Supermarket.API.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var category = _mapper.Map<CreateCategory, Category>(resource);
+
+            var result = await _categoryService.SaveAsync(category); 
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);;
+            }
+
+            var categoryResource = _mapper.Map<Category, CategoryDto>(result.Category);
+
+            return Ok(categoryResource);
+
         }
 
     }
