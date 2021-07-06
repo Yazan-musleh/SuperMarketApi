@@ -18,6 +18,11 @@ namespace Supermarket.API.Persistance.Repository
             await _context.Categories.AddAsync(category);
         }
 
+        public void Delete(Category category)
+        {
+            _context.Categories.Remove(category);
+        }
+
         public async Task<Category> GetByIdAsync(int id)
         {
             return await _context.Categories.FindAsync(id);

@@ -9,5 +9,6 @@ namespace Supermarket.API.Domain.Model.Services
         Task AddAsync(Category category);
         Task<Category> GetByIdAsync(int id);
         void Update(Category category);
+        void Delete(Category category);
     }
 }

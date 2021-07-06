@@ -21,34 +21,57 @@ namespace Supermarket.API.Services
 
         }
 
+        public async Task<CategoryResponse> DeleteAsync(int id)
+        {
+
+            var existingCategory = await _repository.GetByIdAsync(id);
+
+            if (existingCategory == null)
+            {
+                return new CategoryResponse("Character is Not Found. 404");
+            }
+
+            try
+            {
+                _repository.Delete(existingCategory);
+
+                await _unitOfWork.CompleteAsync();
+
+                return new CategoryResponse(existingCategory);
+            }
+            catch (System.Exception ex) 
+            {
+                return new CategoryResponse($"An error occurred while deleting the category {ex.Message}");
+            }
+        }
 
         public async Task<IEnumerable<Category>> ListAsync()
         {
             return await _repository.ListAsync();
         }
 
-        public async Task<SaveCategoryResponse> SaveAsync(Category category)
+        public async Task<CategoryResponse> SaveAsync(Category category)
         {
             try
             {
                 await _repository.AddAsync(category);
                 await _unitOfWork.CompleteAsync();
 
-                return new SaveCategoryResponse(category);
+                return new CategoryResponse(category);
             }
             catch (System.Exception ex)
             {
-                return new SaveCategoryResponse($"An error occurred while saving the category {ex.Message}");
+                return new CategoryResponse($"An error occurred while saving the category {ex.Message}");
             }
         }
 
-        public async Task<SaveCategoryResponse> UpdateAsync(int id, Category category)
+        public async Task<CategoryResponse> UpdateAsync(int id, Category category)
         {
             var existingCategory = await _repository.GetByIdAsync(id);
 
             if (existingCategory is null)
             {
-                return new SaveCategoryResponse("Category Not Found. 404");
+                return new CategoryResponse("Category Not Found. 404");
             }
 
             existingCategory.Name = category.Name;
@@ -59,12 +82,12 @@ namespace Supermarket.API.Services
                 _repository.Update(existingCategory);
                 await _unitOfWork.CompleteAsync();
                 
-                return new SaveCategoryResponse(existingCategory);
+                return new CategoryResponse(existingCategory);
             }
             catch (System.Exception ex)
             {
                 
-                return new SaveCategoryResponse($"An Error Occurred when updating the category: {ex.Message}");
+                return new CategoryResponse($"An Error Occurred when updating the category: {ex.Message}");
             }
         }
     }
