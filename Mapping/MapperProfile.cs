@@ -1,6 +1,7 @@
 using AutoMapper;
 using Supermarket.API.Domain.Model;
 using Supermarket.API.DTOs;
+using Supermarket.API.Extensions;
 
 namespace Supermarket.API.Mapping
 {
@@ -10,6 +11,10 @@ namespace Supermarket.API.Mapping
         {
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateCategory, Category>();
+
+            CreateMap<Product, ProductDto>()
+                .ForMember(src => src.UnitOfMeasurement,
+                           opt => opt.MapFrom(src => src.UnitOfMeasurement.ToDescriptionString()));
         }
     }
 }
