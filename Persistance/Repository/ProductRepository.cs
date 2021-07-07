@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Supermarket.API.Domain.Model;
 using Supermarket.API.Domain.Model.Repositories;
+using Supermarket.API.Domain.Model.Services.Communication;
 using Supermarket.API.DTOs;
 using Supermarket.API.Persistance.Context;
 
@@ -27,5 +28,7 @@ namespace Supermarket.API.Persistance.Repository
         {
             return await _context.Products.Include(p => p.Category).ToListAsync();
         }
+
+        
     }
 }

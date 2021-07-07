@@ -1,20 +1,20 @@
 namespace Supermarket.API.Domain.Model.Services.Communication
 {
-    public class Response : BaseResponse
+    public class Response<T> : BaseResponse
     {
-        public Category Category { get; private set; }
+        public T Data { get; private set; }
 
-        private Response(bool success, string message, Category category) : base(success, message)
+        private Response(bool success, string message, T Data) : base(success, message)
         {
-            Category = category;
+            this.Data = Data;
         }
 
         /// <summary>
         /// Creates a success response.
         /// </summary>
-        /// <param name="category">Saved category.</param>
+        /// <param name="T">saved Item.</param>
         /// <returns>Response.</returns>
-        public Response(Category category) : this(true, string.Empty, category)
+        public Response(T Data) : this(true, string.Empty, Data)
         { }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Supermarket.API.Domain.Model.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public Response(string message) : this(false, message, null)
+        public Response(string message) : this(false, message, default)
         { }
     }
 }

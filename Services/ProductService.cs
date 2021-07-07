@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Supermarket.API.Domain.Model;
 using Supermarket.API.Domain.Model.Repositories;
 using Supermarket.API.Domain.Model.Services;
+using Supermarket.API.Domain.Model.Services.Communication;
 using Supermarket.API.DTOs;
 
 namespace Supermarket.API.Services
@@ -19,19 +20,19 @@ namespace Supermarket.API.Services
 
         }
 
-        public async Task<ProductDto> AddProduct(Product product)
+        public async Task<Response<Product>> AddProduct(Product product)
         {
             try
             {
                 await _repository.AddProduct(product);
                 await _unitOfWork.CompleteAsync();
 
-                return new 
+                return new Response<Product>(product);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
 
-                throw;
+                return new Response<Product>($"there was an error Adding product: {ex.Message}");
             }
         }
 
