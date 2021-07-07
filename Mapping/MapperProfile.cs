@@ -15,6 +15,8 @@ namespace Supermarket.API.Mapping
             CreateMap<Product, ProductDto>()
                 .ForMember(src => src.UnitOfMeasurement,
                            opt => opt.MapFrom(src => src.UnitOfMeasurement.ToDescriptionString()));
+
+            CreateMap<CreateProduct, Product>();
         }
     }
 }

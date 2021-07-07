@@ -24,8 +24,10 @@ namespace Supermarket.API.Services
         {
             try
             {
+
                 await _repository.AddProduct(product);
                 await _unitOfWork.CompleteAsync();
+
 
                 return new Response<Product>(product);
             }

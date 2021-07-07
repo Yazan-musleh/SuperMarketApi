@@ -21,6 +21,7 @@ namespace Supermarket.API.Persistance.Repository
 
         public async Task AddProduct(Product product)
         {
+
             await _context.Products.AddAsync(product);
         }
 

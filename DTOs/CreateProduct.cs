@@ -13,5 +13,6 @@ namespace Supermarket.API.DTOs
         public EUnitOfMeasurement UnitOfMeasurement { get; set; }
 
         public int CategoryId { get; set; }
+        
     }
 }

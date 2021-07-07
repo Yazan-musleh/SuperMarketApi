@@ -10,5 +10,6 @@ namespace Supermarket.API.DTOs
         public int QuantityInPackage { get; set; }
         public string UnitOfMeasurement { get; set; }
         public Category Category { get; set; }
+        public int CategoryId {get; set;}
     }
 }
